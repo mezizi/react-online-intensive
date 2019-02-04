@@ -8,7 +8,7 @@ import Styles from './styles.m.css';
 const portal = document.getElementById('spinner');
 
 export default class Spinner extends Component {
-    render () {
+    render() {
         const { isSpinning } = this.props;
 
         return createPortal(
