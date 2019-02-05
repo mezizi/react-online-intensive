@@ -43,10 +43,10 @@ export default class Like extends Component {
 
     _hideLikers () {
         this.setState({
+            // eslint-disable-next-line react/no-unused-state
             hideLikers: false,
         });
     }
-
 
     _likePost () {
         const { _likePost, id } = this.props;

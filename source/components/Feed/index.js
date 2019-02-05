@@ -18,6 +18,7 @@ export default class Feed extends Component {
         this._createPost = this._createPost.bind(this);
         this._setPostsSpinnerState = this._setPostsSpinnerState.bind(this);
         this._likePost = this._likePost.bind(this);
+        this._deletePost = this._deletePost.bind(this);
     }
 
     state = {
@@ -79,12 +80,32 @@ export default class Feed extends Component {
         });
     }
 
+
+    async _deletePost(id) {
+        this._setPostsSpinnerState(true);
+
+        await delay(1200);
+
+        this.setState(({ posts }) => ({
+            posts:        posts.filter((post) => post.id !== id),
+            spinnerState: false,
+        }));
+    }
+
+
     render() {
         const { posts, spinnerState } = this.state;
 
         const postsJSX = posts.map((post) => {
             // eslint-disable-next-line react/jsx-max-props-per-line
-            return <Post key = { post.id } { ...post } _likePost = { this._likePost } />;
+            // eslint-disable-next-line max-len
+            return (
+                <Post
+                    key = { post.id }
+                    { ...post }
+                    _likePost = { this._likePost }
+                />
+            );
         });
 
         return (
@@ -93,6 +114,7 @@ export default class Feed extends Component {
                 <StatusBar />
                 <Composer
                     _createPost = { this._createPost }
+                    _deletePost = { this._deletePost }
                 />
                 {postsJSX}
             </section>
