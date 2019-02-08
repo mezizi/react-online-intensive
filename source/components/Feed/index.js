@@ -25,12 +25,13 @@ export default class Feed extends Component {
             { id: '123', comment: 'Hi there!', created: 1526825076849, likes: [] },
             { id: '177', comment: 'Hello !', created: 1526825076849, likes: [] },
         ],
-        spinnerState: false,
+        // spinnerState: false,
+        isSpinning: false,
     };
 
     _setPostsSpinnerState (state) {
         this.setState({
-            spinnerState: state,
+            isSpinning: state,
         });
     }
 
@@ -46,8 +47,8 @@ export default class Feed extends Component {
         await delay(1200);
 
         this.setState(({ posts }) => ({
-            posts:        [ post, ...posts ],
-            spinnerState: false,
+            posts:      [ post, ...posts ],
+            isSpinning: false,
         }));
     }
 
@@ -74,13 +75,13 @@ export default class Feed extends Component {
             return post;
         });
         this.setState({
-            posts:        newPosts,
-            spinnerState: false,
+            posts:      newPosts,
+            isSpinning: false,
         });
     }
 
     render() {
-        const { posts, spinnerState } = this.state;
+        const { posts, isSpinning } = this.state;
 
         const postsJSX = posts.map((post) => {
             // eslint-disable-next-line react/jsx-max-props-per-line
@@ -89,7 +90,7 @@ export default class Feed extends Component {
 
         return (
             <section className = { Styles.feed }>
-                <Spinner isSpinning = { spinnerState } />
+                <Spinner isSpinning = { isSpinning } />
                 <StatusBar />
                 <Composer
                     _createPost = { this._createPost }
