@@ -16,6 +16,7 @@ export default class Feed extends Component {
     constructor () {
         super();
         this._createPost = this._createPost.bind(this);
+        this._deletePost = this._deletePost.bind(this);
         this._setPostsSpinnerState = this._setPostsSpinnerState.bind(this);
         this._likePost = this._likePost.bind(this);
     }
@@ -25,7 +26,6 @@ export default class Feed extends Component {
             { id: '123', comment: 'Hi there!', created: 1526825076849, likes: [] },
             { id: '177', comment: 'Hello !', created: 1526825076849, likes: [] },
         ],
-        // spinnerState: false,
         isSpinning: false,
     };
 
@@ -52,13 +52,24 @@ export default class Feed extends Component {
         }));
     }
 
+    async _deletePost(id) {
+        this._setPostsSpinnerState(true);
+
+        await delay(1200);
+
+        this.setState(({ posts }) => ({
+            posts:      posts.filter((post) => post.id !== id),
+            isSpinning: false,
+        }));
+    }
+
     async _likePost (id) {
         const { currentUserFirstName, currentUserLastName } = this.props;
         this._setPostsSpinnerState(true);
 
         await delay(1200);
 
-        const newPosts = this.setState.posts.map((post) => {
+        const newPosts = this.state.posts.map((post) => {
             if (post.id === id) {
                 return {
                     ...post,
@@ -94,6 +105,7 @@ export default class Feed extends Component {
                 <StatusBar />
                 <Composer
                     _createPost = { this._createPost }
+                    _deletePost = { this._deletePost }
                 />
                 {postsJSX}
             </section>

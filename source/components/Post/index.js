@@ -19,6 +19,7 @@ export default class Post extends Component {
         likes:     array.isRequired,
     };
 
+
     render() {
         const { comment, created, _likePost, id, likes } = this.props;
 
@@ -26,7 +27,9 @@ export default class Post extends Component {
             <Consumer>
                 {(context) => (
                     <section className = { Styles.post }>
-                        <span className = { Styles.cross }/>
+                        <span
+                            className = { Styles.cross }
+                        />
                         <img src = { context.avatar } />
                         <a>
                             {`${context.currentUserFirstName} 

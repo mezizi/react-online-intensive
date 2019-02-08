@@ -60,6 +60,31 @@ export default class Composer extends Component {
         }
     }
 
+    // _updatePost(event) {
+    //     this.setState({
+    //         posts: event.target.value,
+    //     });
+    // }
+
+    // _handleButtonSubmit(event) {
+    //     event.preventDefault();
+    //     this._submitPost();
+    // }
+
+    // _submitePost(event) {
+    //     const { posts } = this.state;
+
+    //     if (!posts) {
+    //         return null;
+    //     }
+
+    //     this.props._deletePost(posts);
+
+    //     this.setState({
+    //         posts: '',
+    //     });
+    // }
+
     render() {
         const { comment } = this.state;
 
