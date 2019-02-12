@@ -12,12 +12,25 @@ import Styles from './styles.m.css';
 
 export default class Post extends Component {
     static propTypes = {
-        _likePost: func.isRequired,
-        comment:   string.isRequired,
-        created:   number.isRequired,
-        id:        string.isRequired,
-        likes:     array.isRequired,
+        _likePost:   func.isRequired,
+        _removePost: func.isRequired,
+        comment:     string.isRequired,
+        created:     number.isRequired,
+        id:          string.isRequired,
+        likes:       array.isRequired,
     };
+
+    constructor() {
+        super();
+
+        this._removePost = this._removePost.bind(this);
+    }
+
+    _removePost () {
+        const { _removePost, id } = this.props;
+
+        _removePost(id);
+    }
 
 
     render() {
@@ -29,6 +42,7 @@ export default class Post extends Component {
                     <section className = { Styles.post }>
                         <span
                             className = { Styles.cross }
+                            onClick = { this._removePost }
                         />
                         <img src = { context.avatar } />
                         <a>

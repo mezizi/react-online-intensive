@@ -16,7 +16,7 @@ export default class Feed extends Component {
     constructor () {
         super();
         this._createPost = this._createPost.bind(this);
-        this._deletePost = this._deletePost.bind(this);
+        this._removePost = this._removePost.bind(this);
         this._setPostsSpinnerState = this._setPostsSpinnerState.bind(this);
         this._likePost = this._likePost.bind(this);
     }
@@ -52,7 +52,7 @@ export default class Feed extends Component {
         }));
     }
 
-    async _deletePost(id) {
+    async _removePost(id) {
         this._setPostsSpinnerState(true);
 
         await delay(1200);
@@ -96,7 +96,14 @@ export default class Feed extends Component {
 
         const postsJSX = posts.map((post) => {
             // eslint-disable-next-line react/jsx-max-props-per-line
-            return <Post key = { post.id } { ...post } _likePost = { this._likePost } />;
+            return (
+                <Post
+                    key = { post.id }
+                    { ...post }
+                    _likePost = { this._likePost }
+                    _removePost = { this._removePost }
+                />
+            );
         });
 
         return (
@@ -105,7 +112,6 @@ export default class Feed extends Component {
                 <StatusBar />
                 <Composer
                     _createPost = { this._createPost }
-                    _deletePost = { this._deletePost }
                 />
                 {postsJSX}
             </section>
