@@ -20,13 +20,7 @@ export default class Post extends Component {
         likes:       array.isRequired,
     };
 
-    constructor() {
-        super();
-
-        this._removePost = this._removePost.bind(this);
-    }
-
-    _removePost () {
+    _removePost = () => {
         const { _removePost, id } = this.props;
 
         _removePost(id);
