@@ -23,18 +23,6 @@ export default class Like extends Component {
         ).isRequired,
     };
 
-    // constructor() {
-    //     super();
-
-    //     this._getLikedByMe = this._getLikedByMe.bind(this);
-    //     this._getLikeStyles = this._getLikeStyles.bind(this);
-    //     this._likePost = this._likePost.bind(this);
-    //     this._hideLikers = this._hideLikers.bind(this);
-    //     this._showLikers = this._showLikers.bind(this);
-    //     this._getLikersList = this._getLikersList.bind(this);
-    //     this._getLikesDescription = this._getLikesDescription.bind(this);
-    // }
-
     state = {
         showLikers: false,
     }
@@ -50,7 +38,6 @@ export default class Like extends Component {
             hideLikers: false,
         });
     }
-
 
     _likePost = () => {
         const { _likePost, id } = this.props;
