@@ -11,8 +11,8 @@ import { Provider } from 'components/HOC/withProfile';
 import avatar from 'theme/assets/lisa';
 
 const options = {
-    currentUserFirstName: 'Lisa',
-    currentUserLastName:  'Simpson',
+    currentUserFirstName: 'Лиза',
+    currentUserLastName:  'Ильина',
     avatar,
 };
 
