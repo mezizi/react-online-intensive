@@ -1,5 +1,8 @@
 //Core
 import React, { Component } from 'react';
+import { Transition } from 'react-transition-group';
+import { fromTo } from 'gsap';
+
 // import moment from 'moment';
 
 //Components
@@ -9,6 +12,7 @@ import StatusBar from 'components/StatusBar';
 import Composer from 'components/Composer';
 import Post from 'components/Post';
 import Spinner from 'components/Spinner';
+import Postman from 'components/Postman';
 
 //Instruments
 import Styles from './styles.m.css';
@@ -49,11 +53,24 @@ export default class Feed extends Component {
                 }));
             }
         });
+
+        socket.on('like', (postJSON) => {
+            const { data: likedPost } = JSON.parse(postJSON);
+
+            console.log('-> like', likedPost);
+
+            this.setState(({ posts }) => ({
+                posts: posts.map(
+                    (post) => post.id === likedPost.id ? likedPost : post,
+                ),
+            }));
+        });
     }
 
     componentWillUnmount () {
         socket.removeListner('create');
         socket.removeListner('remove');
+        socket.removeListner('like');
     }
 
     _setPostsSpinnerState = (state) => {
@@ -70,6 +87,8 @@ export default class Feed extends Component {
         });
 
         const { data: posts } = await reponse.json();
+
+        console.log('-> fetch posts', posts);
 
         this.setState({
             posts,
@@ -134,8 +153,19 @@ export default class Feed extends Component {
         }));
     };
 
+    _animateComposerEnter = (composer) => {
+        fromTo(
+            composer,
+            1,
+            {opacity: 0, rotationX: 50 },
+            {opacity: 1, rotationX: 0 },
+        );
+    }
+
     render() {
         const { posts, isSpinning } = this.state;
+
+        console.log('this.state', this.state);
 
         const postsJSX = posts.map((post) => {
             return (
@@ -153,9 +183,14 @@ export default class Feed extends Component {
             <section className = { Styles.feed }>
                 <Spinner isSpinning = { isSpinning } />
                 <StatusBar />
-                <Composer
-                    _createPost = { this._createPost }
-                />
+                <Transition
+                    appear
+                    in
+                    timeOut = { 4000 }
+                    onEnter = { this._animateComposerEnter }>
+                    <Composer _createPost = { this._createPost }/>
+                </Transition>
+                <Postman/>
                 {postsJSX}
             </section>
         );
