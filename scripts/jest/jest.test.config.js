@@ -8,7 +8,7 @@ module.exports = {
     globals:     {
         __DEV__: true,
     },
-    collectCoverage:     false,
+    collectCoverage:     true,
     collectCoverageFrom: [
         '<rootDir>/source/bus/auth/**/*.{js,jsx}',
         '<rootDir>/source/bus/ui/**/*.{js,jsx}',
