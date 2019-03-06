@@ -1,5 +1,5 @@
 //Core
-import { sum, delay, getUniqueID, getFullApiUrl, api } from './';
+import { sum, delay, getUniqueID, getFullApiUrl } from './';
 
 describe('instruments:', () => {
     test('sum function should be a function', () => {
