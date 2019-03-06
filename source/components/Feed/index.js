@@ -1,12 +1,11 @@
 //Core
 import React, { Component } from 'react';
-import { Transition,
+import {
+    Transition,
     CSSTransition,
     TransitionGroup,
 } from 'react-transition-group';
 import { fromTo } from 'gsap';
-
-// import moment from 'moment';
 
 //Components
 import { withProfile } from 'components/HOC/withProfile';
@@ -16,6 +15,7 @@ import Composer from 'components/Composer';
 import Post from 'components/Post';
 import Spinner from 'components/Spinner';
 import Postman from 'components/Postman';
+import Counter from 'components/Counter';
 
 //Instruments
 import Styles from './styles.m.css';
@@ -30,7 +30,7 @@ export default class Feed extends Component {
         isSpinning: false,
     };
 
-    componentDidMount () {
+    componentDidMount() {
         const { currentUserFirstName, currentUserLastName } = this.props;
 
         this._fetchPosts();
@@ -70,7 +70,7 @@ export default class Feed extends Component {
         });
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         socket.removeListner('create');
         socket.removeListner('remove');
         socket.removeListner('like');
@@ -99,7 +99,7 @@ export default class Feed extends Component {
         });
     };
 
-    _createPost = async (comment) =>{
+    _createPost = async (comment) => {
         this._setPostsSpinnerState(true);
 
         const response = await fetch(api, {
@@ -160,8 +160,8 @@ export default class Feed extends Component {
         fromTo(
             composer,
             1,
-            {opacity: 0, rotationX: 50 },
-            {opacity: 1, rotationX: 0 },
+            { opacity: 0, rotationX: 50 },
+            { opacity: 1, rotationX: 0 },
         );
     }
 
@@ -176,11 +176,13 @@ export default class Feed extends Component {
                     classNames = {{
                         enter:       Styles.postInStart,
                         enterActive: Styles.postInEnd,
+                        exit:        Styles.postOutStart,
+                        exitActive:  Styles.postOutEnd,
                     }}
                     key = { post.id }
                     timeout = {{
                         enter: 500,
-                        exit:  400,
+                        exit:  500,
                     }}>
                     <Catcher>
                         <Post
@@ -202,12 +204,12 @@ export default class Feed extends Component {
                     in
                     timeout = { 4000 }
                     onEnter = { this._animateComposerEnter }>
-                    <Composer _createPost = { this._createPost }/>
+                    <Composer _createPost = { this._createPost } />
                 </Transition>
-                <Postman/>
+                <Counter count = { postsJSX.length }/>
+                <Postman />
                 <TransitionGroup>{postsJSX}</TransitionGroup>
             </section>
         );
     }
 }
-
